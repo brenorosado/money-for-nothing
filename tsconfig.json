@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": false,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"],
+  "extends": "expo/tsconfig.base"
+}
