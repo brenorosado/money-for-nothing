@@ -1,35 +1,60 @@
-import { StyleSheet } from "react-native";
+import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
 
-export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "white",
-        padding: 16,
-        gap: 16
-    },
-    configContainer: {
-        borderColor: "black",
-        borderWidth: 1,
-        borderRadius: 16
-    },
-    configHeader: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 16,
-        padding: 16,
-        borderRadius: 16
-    },
-    configHeaderText: {
-        color: "black",
-        fontSize: 20,
-        lineHeight: 20
-    },
-    configOption: {
-        padding: 16,
-        backgroundColor: "#e1e1e1"
-    },
-    lastConfigOption: {
-        borderBottomLeftRadius: 16,
-        borderBottomRightRadius: 16,
-    }
-})
+export const ConfigScreenContainer = styled.View`
+    flex: 1;
+    padding: 16px;
+    gap: 16px;  
+    background: ${({ theme }) => theme.colors.secundary};
+`;
+
+export const ConfigContainer = styled.View`
+    border-radius: 16px;
+    border: 1px solid ${({ theme }) => theme.colors.main};
+`;
+
+export const ConfigHeader = styled.TouchableOpacity`
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 16px;
+`;
+
+export const ConfigHeaderText = styled.Text`
+    color: ${({ theme }) => theme.colors.main};
+    font-size: 20px;
+    line-height: 20px;
+`;
+
+export const ConfigOption = styled.TouchableOpacity<{ lastElement: boolean }>`
+    padding: 16px;
+    background: ${({ theme }) => theme.colors.aux};
+
+    ${({ lastElement }) => lastElement && `
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+    `}
+`;
+
+export const ConfigOptionText = styled.Text`
+    color: ${({ theme }) => theme.colors.main};
+`;
+
+export const ThemeIcon = styled(Ionicons).attrs({
+    name: "contrast",
+    size: 24,
+  })`
+    color: ${({ theme }) => theme.colors.main};
+    margin-bottom: 6px;
+    opacity: 0.7;
+`;
+
+export const LanguageIcon = styled(Ionicons).attrs({
+    name: "language",
+    size: 24,
+  })`
+    color: ${({ theme }) => theme.colors.main};
+    margin-bottom: 6px;
+    opacity: 0.7;
+`;

@@ -1,16 +1,18 @@
-import { TouchableOpacity, View, Text } from "react-native";
-import { styles as S } from "./styles";
 import { useConfig, ConfigProps } from "../../contexts/Config";
-import { Ionicons } from '@expo/vector-icons';
 import { useState } from "react";
+import * as S from "./styles";
+import { translateLabel } from "../../utils/translateLabel";
 
 const languageOptions: {
+    label: string;
     value: ConfigProps["language"]
 }[] = [
     {
+        label: "English",
         value: "english"
     },
     {
+        label: "Português - BR",
         value: "portuguese"
     }
 ]
@@ -38,59 +40,47 @@ export const ConfigScreen = () => {
     console.log("config", JSON.stringify(config, null, 2));
 
     return (
-        <View style={S.container}>
-            <View style={S.configContainer}>
-                <TouchableOpacity
-                    style={S.configHeader}
+        <S.ConfigScreenContainer>
+            <S.ConfigContainer>
+                <S.ConfigHeader
                     onPress={() => setShowLanguageOptions(prevState => !prevState)}
                 >
-                    <Ionicons name="language" size={24} color="black" />
-                    <Text style={S.configHeaderText}>Idioma: {language}</Text>
-                </TouchableOpacity>
+                    <S.LanguageIcon />
+                    <S.ConfigHeaderText>{translateLabel(language, "config", "language")}: {languageOptions.find(l => l.value === language).label}</S.ConfigHeaderText>
+                </S.ConfigHeader>
                 {showLanguageOptions && 
-                    languageOptions.map(({ value }, index) => (
-                        <TouchableOpacity
+                    languageOptions.map(({ value, label }, index) => (
+                        <S.ConfigOption
                             key={value}
-                            style={{
-                                ...S.configOption,
-                                ...(index === languageOptions.length - 1 &&
-                                    S.lastConfigOption
-                                )
-                            }}
                             onPress={() => {
                                 selectLanguage(value);
                             }}
+                            lastElement={index === languageOptions.length - 1}
                         >
-                            <Text>{value}</Text>
-                        </TouchableOpacity>
+                            <S.ConfigOptionText>{label}</S.ConfigOptionText>
+                        </S.ConfigOption>
                 ))}
-            </View>
-            <View style={S.configContainer}>
-                <TouchableOpacity
-                    style={S.configHeader}
+            </S.ConfigContainer>
+            <S.ConfigContainer>
+                <S.ConfigHeader
                     onPress={() => setShowThemeOptions(prevState => !prevState)}
                 >
-                    <Ionicons name="contrast" size={24} color="black" />
-                    <Text style={S.configHeaderText}>Tema: {theme}</Text>
-                </TouchableOpacity>
+                    <S.ThemeIcon />
+                    <S.ConfigHeaderText>{translateLabel(language, "config", "theme")}: {translateLabel(language, "config", theme)}</S.ConfigHeaderText>
+                </S.ConfigHeader>
                 {showThemeOptions && 
                     themeOptions.map(({ value }, index) => (
-                        <TouchableOpacity
+                        <S.ConfigOption
                             key={value}
-                            style={{
-                                ...S.configOption,
-                                ...(index === themeOptions.length - 1 &&
-                                    S.lastConfigOption
-                                )
-                            }}
                             onPress={() => {
                                 selectTheme(value);
                             }}
+                            lastElement={index === themeOptions.length - 1}
                         >
-                            <Text>{value}</Text>
-                        </TouchableOpacity>
+                            <S.ConfigOptionText>{translateLabel(language, "config", value)}</S.ConfigOptionText>
+                        </S.ConfigOption>
                 ))}
-            </View>
-        </View>
+            </S.ConfigContainer>
+        </S.ConfigScreenContainer>
     )
 }
