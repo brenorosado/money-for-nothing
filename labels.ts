@@ -6,6 +6,9 @@ export const labels = {
             dark: "Escuro",
             default: "Padrão",
             light: "Claro"
+        },
+        record: {
+            "new record": "Novo lançamento"
         }
     },
     english: {
@@ -15,6 +18,9 @@ export const labels = {
             dark: "Dark",
             default: "Default",
             light: "Light"
+        },
+        record: {
+            "new record": "New Record"
         }
     }
 };

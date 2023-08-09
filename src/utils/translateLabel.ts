@@ -1,7 +1,7 @@
 import { labels } from "../../labels";
 
 type languageType = "portuguese" | "english";
-type screenType = "config";
+type screenType = "config" | "record";
 
 export const translateLabel = (
     language: languageType,

@@ -1,10 +1,17 @@
-import { View, Text } from "react-native";
-import { styles as S } from "./styles";
+import * as S from "./styles";
+import { RecordButton } from "../../components/RecordButton";
 
 export const RecordsScreen = () => {
     return (
-        <View style={S.recordsScreenContainer}>
-            <Text style={S.testText}>Records Screen</Text>
-        </View>
+        <>
+            <S.RecordsScreenContainer
+                ListHeaderComponent={() => (
+                    <S.RecordsHeaderContainer>
+                        <S.RecordsTitle>Records Screen</S.RecordsTitle>
+                    </S.RecordsHeaderContainer>
+                )}
+            />
+            <RecordButton />
+        </>
     )
 }
