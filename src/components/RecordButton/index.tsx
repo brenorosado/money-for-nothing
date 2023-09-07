@@ -7,9 +7,9 @@ export const RecordButton = () => {
 
     return (
         <>
-            {showModal && <RecordForm />}
+            {showModal && <RecordForm onClose={() => setShowModal(false)}/>}
             <S.NewRecordFloatinButton
-                onPress={() => setShowModal(prevState => !prevState)}
+                onPress={() => setShowModal(true)}
             >
                 <S.PlusIcon />
             </S.NewRecordFloatinButton>

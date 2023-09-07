@@ -1,52 +1,113 @@
-import {getDBConnection} from '../../services/localDatabase';
+import * as SQLite from "expo-sqlite";
 
-type IRecord = {
+const db = SQLite.openDatabase('mondey_for_nothing_db', "1");
+
+export type IRecord = {
   localId: number;
   value: number;
-  type: string; // INCOME / EXPENSE
+  type: "INCOME" | "EXPENSE";
   category: string;
   description: string;
+  localCreatedAt: Date;
 };
 
 const createTable = async () => {
-  const db = await getDBConnection();
-
   const query =
     'CREATE TABLE IF NOT EXISTS records (localId INTEGER PRIMARY KEY AUTOINCREMENT, value INTEGER, type TEXT, category TEXT, description TEXT);';
 
-  db.transaction(tx => {
-    tx.executeSql(query);
-  });
+  return new Promise((resolve, reject) => {
+    return db.transaction(tx => {
+      tx.executeSql(
+        query,
+        [],
+        (transaction, result) => {
+          console.log("Records table created successfully: ", result);
+          return resolve(true);
+        },
+        (error) => {
+          console.log("Records table creation failed: ", error);
+          resolve(false);
+          return false;
+        }
+      );
+    });
+  })
+  
 };
 
 const dropTable = async () => {
-  const db = await getDBConnection();
+  const query = 'DROP TABLE records;';
 
-  db.transaction(tx => {
-    tx.executeSql('DROP TABLE records;');
+  return new Promise((resolve, reject) => {
+    return db.transaction(tx => {
+      tx.executeSql(
+        query,
+        [],
+        (transaction, result) => {
+          console.log("Records table dropped successfully: ", result);
+          return resolve(true);
+        },
+        (error) => {
+          console.log("Records table dropping failed: ", error);
+          resolve(false);
+          return false;
+        }
+      );
+    });
+  })
+  
+};
+
+const create = async ({ value, type, category, description }: Omit<IRecord, "localId">) => {
+  const query = 'INSERT INTO records (value, type, category, description) values (?, ?, ?, ?);';
+  
+  return new Promise((resolve, reject) => {
+    return db.transaction(tx => {
+      tx.executeSql(
+        query,
+        [ value, type, category, description || "" ],
+        (transaction, result) => {
+          const { insertId } = result;
+          console.log('Create record success: ', result);
+          resolve(insertId);
+          return true;
+        },
+        (error) => {
+          console.log("Create record error: ", error);
+          reject(error);
+          return false;
+        },
+      );
+    });
   });
 };
 
-const create = async (obj: Omit<IRecord, "localId">) => {
-  const db = await getDBConnection();
+const getRecordList: () => Promise<IRecord[]> = async () => {
+  const query = `SELECT * FROM records;`;
 
-  const query = 'INSERT INTO records (value, type, category, description) values (?, ?, ?, ?);';
-  const {
-    value,
-    type,
-    category,
-    description
-  } = obj;
-  return db.executeSql(query, [
-    value,
-    type,
-    category,
-    description
-  ]);
-};
+  return new Promise((resolve, reject) => {
+    return db.transaction(tx => {
+      tx.executeSql(
+        query,
+        [],
+        (transaction, result) => {
+          console.log('Get records list result: ', result);
+          const { _array } = result.rows;
+          return resolve(_array);
+        },
+        (error) => {
+          console.log("Get records list error: ", error);
+          reject(error);
+          return false;
+        },
+      );
+    });
+  });
+}
 
 export const Record = {
   createTable,
   dropTable,
   create,
+  getRecordList,
 };

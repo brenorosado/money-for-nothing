@@ -10,8 +10,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function App() {
-
+const App = () => {
   useEffect(() => {
     Record.createTable();
   }, [])
@@ -24,3 +23,5 @@ export default function App() {
     </ConfigContextProvider>
   );
 }
+
+export default App;
