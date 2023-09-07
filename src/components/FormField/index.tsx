@@ -31,6 +31,7 @@ export const FormField = ({
                         onBlur={onBlur}
                         onChangeText={value => onChange(value)}
                         value={value}
+                        placeholderTextColor="gray"
                     />
                 </S.FormFieldContainer>
             )}

@@ -8,12 +8,12 @@ export type IRecord = {
   type: "INCOME" | "EXPENSE";
   category: string;
   description: string;
-  localCreatedAt: Date;
+  localCreatedAt: string;
 };
 
 const createTable = async () => {
   const query =
-    'CREATE TABLE IF NOT EXISTS records (localId INTEGER PRIMARY KEY AUTOINCREMENT, value INTEGER, type TEXT, category TEXT, description TEXT);';
+    'CREATE TABLE IF NOT EXISTS records (localId INTEGER PRIMARY KEY AUTOINCREMENT, value INTEGER, type TEXT, category TEXT, description TEXT, localCreatedAt TEXT);';
 
   return new Promise((resolve, reject) => {
     return db.transaction(tx => {
@@ -59,13 +59,20 @@ const dropTable = async () => {
 };
 
 const create = async ({ value, type, category, description }: Omit<IRecord, "localId">) => {
-  const query = 'INSERT INTO records (value, type, category, description) values (?, ?, ?, ?);';
+  const query = `
+    INSERT INTO records (
+      value,
+      type,
+      category,
+      description,
+      localCreatedAt
+    ) values (?, ?, ?, ?, ?);`;
   
   return new Promise((resolve, reject) => {
     return db.transaction(tx => {
       tx.executeSql(
         query,
-        [ value, type, category, description || "" ],
+        [ value, type, category, description || "" , new Date().toISOString()],
         (transaction, result) => {
           const { insertId } = result;
           console.log('Create record success: ', result);

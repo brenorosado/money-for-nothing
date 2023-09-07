@@ -7,10 +7,14 @@ export const FormFieldContainer = styled.View`
 
 export const TextField = styled.TextInput`
     padding: 8px 16px;
+    color: ${({ theme }) => theme.colors.main};
 `;
 
 export const Label = styled.Text`
-    background: ${({ theme }) => theme.colors.main};
+    ${({ theme }) => `
+        background: ${theme.colors.secundary};
+        color: ${theme.colors.aux};
+    `};
     position: absolute;
     top: -10px;
     left: 12px;

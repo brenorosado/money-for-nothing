@@ -1,18 +1,17 @@
-import { useState } from "react";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import * as S from "./styles";
-import { RecordForm } from "../RecordForm";
+import { RecordsStackParamList } from "../../navigation/Stacks/RecordsStack";
 
-export const RecordButton = () => {
-    const [showModal, setShowModal] = useState<boolean>(false);
-
+export const RecordButton = (
+    { navigation }: {
+        navigation: NativeStackNavigationProp<RecordsStackParamList>
+    }
+) => {
     return (
-        <>
-            {showModal && <RecordForm onClose={() => setShowModal(false)}/>}
-            <S.NewRecordFloatinButton
-                onPress={() => setShowModal(true)}
-            >
-                <S.PlusIcon />
-            </S.NewRecordFloatinButton>
-        </>
+        <S.NewRecordFloatinButton
+            onPress={() => navigation.navigate("Record", { localId: undefined })}
+        >
+            <S.PlusIcon />
+        </S.NewRecordFloatinButton>
     )
 }

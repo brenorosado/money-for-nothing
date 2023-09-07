@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { RecordsScreen } from "../../screens/Records";
+import { RecordsStack } from "../Stacks/RecordsStack";
 import { ConfigScreen } from "../../screens/Config";
 import { View } from "react-native";
 import { Ionicons } from '@expo/vector-icons'; 
@@ -30,7 +30,7 @@ export const Tabs = () => {
     >
         <Tab.Screen
         name="Records"
-        component={RecordsScreen}
+        component={RecordsStack}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="cash-outline" size={24} color={color} />

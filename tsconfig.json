@@ -3,9 +3,7 @@
     "esModuleInterop": false,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "paths": {}
   },
   "include": ["src"],
   "extends": "expo/tsconfig.base"
