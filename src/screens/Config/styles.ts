@@ -3,10 +3,22 @@ import { Ionicons } from "@expo/vector-icons";
 
 export const ConfigScreenContainer = styled.View`
     flex: 1;
-    padding: 16px;
+    padding: 0px 16px;
     gap: 16px;  
-    background: ${({ theme }) => theme.colors.secundary};
+    background: ${({ theme }) => theme.colors.aux4};
 `;
+
+export const ConfigScreenHeaderContainer = styled.View`
+  padding: 16px;
+  align-items: center;
+`;
+
+export const ConfigScreenTitle = styled.Text`
+  color: ${({ theme }) => theme.colors.main};
+  font-weight: 500;
+  font-size: 20px;
+`;
+
 
 export const ConfigContainer = styled.View`
     border-radius: 16px;

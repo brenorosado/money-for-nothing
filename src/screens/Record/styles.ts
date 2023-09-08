@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 export const RecordFormContainer = styled.View`
     flex: 1;
-    background: ${({ theme }) => theme.colors.secundary};
+    background: ${({ theme }) => theme.colors.aux4};
     padding: 16px;
     width: 100%;
     gap: 16px;

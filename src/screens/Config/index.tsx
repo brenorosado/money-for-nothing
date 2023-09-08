@@ -39,8 +39,11 @@ export const ConfigScreen = () => {
     const { language, theme } = config;
     console.log("config", JSON.stringify(config, null, 2));
 
-    return (
+    return ( 
         <S.ConfigScreenContainer>
+            <S.ConfigScreenHeaderContainer>
+                <S.ConfigScreenTitle>Config</S.ConfigScreenTitle>
+            </S.ConfigScreenHeaderContainer>
             <S.ConfigContainer>
                 <S.ConfigHeader
                     onPress={() => setShowLanguageOptions(prevState => !prevState)}

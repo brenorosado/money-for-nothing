@@ -90,7 +90,7 @@ const create = async ({ value, type, category, description }: Omit<IRecord, "loc
 };
 
 const getRecordList: () => Promise<IRecord[]> = async () => {
-  const query = `SELECT * FROM records;`;
+  const query = `SELECT * FROM records ORDER BY localCreatedAt DESC;`;
 
   return new Promise((resolve, reject) => {
     return db.transaction(tx => {

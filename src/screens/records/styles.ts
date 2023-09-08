@@ -5,7 +5,7 @@ export const RecordsScreenContainer = styled.FlatList`
   position: relative;
   padding: 0px 16px;
   ${({ theme }) => `
-    background: ${theme.colors.secundary};
+    background: ${theme.colors.aux4};
   `}
 `;
 
