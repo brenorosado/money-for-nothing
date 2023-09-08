@@ -29,7 +29,7 @@ export const RecordsScreen = (
             <S.RecordsScreenContainer
                 ListHeaderComponent={() => (
                     <S.RecordsHeaderContainer>
-                        <S.RecordsTitle>Records Screen</S.RecordsTitle>
+                        <S.RecordsTitle>Records</S.RecordsTitle>
                     </S.RecordsHeaderContainer>
                 )}
                 ItemSeparatorComponent={<S.ListSeparator />}

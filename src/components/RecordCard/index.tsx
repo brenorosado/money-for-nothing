@@ -10,7 +10,7 @@ export const RecordCard = (
         navigation: NativeStackNavigationProp<RecordsStackParamList>
     }
 ) => {
-    const { localId, category, value, localCreatedAt } = record;
+    const { localId, category, value, localCreatedAt, type } = record;
 
     return (
         <S.RecordCardContainer onPress={() => navigation.navigate("Record", { localId })}>

@@ -29,7 +29,7 @@ export const ConfigHeaderText = styled.Text`
 
 export const ConfigOption = styled.TouchableOpacity<{ lastElement: boolean }>`
     padding: 16px;
-    background: ${({ theme }) => theme.colors.aux};
+    background: ${({ theme }) => theme.colors.aux1};
 
     ${({ lastElement }) => lastElement && `
         border-bottom-left-radius: 16px;

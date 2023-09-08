@@ -3,9 +3,9 @@ import { Animated } from "react-native";
 
 export const RecordTypeSelectorContainer = styled.View`
     flex-direction: row;
-    border-radius: 16px;
+    border-radius: 8px;
     background: ${({ theme }) => theme.colors.secundary};
-    border: 1px solid ${({ theme }) => theme.colors.aux};
+    border: 1px solid ${({ theme }) => theme.colors.aux12};
     overflow: hidden;
 `;
 
@@ -14,7 +14,7 @@ export const SelectedRecordTypeIndicator = styled(Animated.View)<{ isExpense: bo
     height: 100%;
     width: 50%;
     zIndex: 98;
-    border-radius: 14px;
+    border-radius: 7px;
     background: ${({ isExpense }) => isExpense ? 'lightcoral' : 'lightgreen'};
 `;
 
@@ -25,7 +25,7 @@ export const RecordType = styled.TouchableOpacity.attrs({
     width: 50%;
     align-items: center;
     justify-content: center;
-    border-radius: 16px;
+    border-radius: 8px;
     zIndex: 99;
 `;
 

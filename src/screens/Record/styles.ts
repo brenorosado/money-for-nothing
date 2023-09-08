@@ -11,13 +11,13 @@ export const RecordFormContainer = styled.View`
 
 export const RecordHeaderContainer = styled.View`
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 `;
 
 export const RecordTitle = styled.Text`
     color: ${({ theme }) => theme.colors.main};
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 500;
 `;
 
@@ -36,7 +36,7 @@ export const AddRecordButton = styled.TouchableOpacity`
     width: 100%;
     align-items: center;
     justify-content: center;
-    background: ${({ theme }) => theme.colors.aux};
+    background: ${({ theme }) => theme.colors.aux1};
     padding: 16px;
     border-radius: 16px;
 `;
