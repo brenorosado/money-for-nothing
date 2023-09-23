@@ -31,6 +31,9 @@
         "projectId": "bb7a3caf-4e8e-464c-add6-32873011b199"
       }
     },
-    "owner": "brenorosadodev"
+    "owner": "brenorosadodev",
+    "plugins": [
+      "expo-localization"
+    ]
   }
 }

@@ -18,9 +18,11 @@ export const RecordFormContainer = styled.View`
 `;
 
 export const RecordHeaderContainer = styled.View`
+    padding: 16px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    background: ${({ theme }) => theme.colors.screenBackground};
 `;
 
 export const RecordTitle = styled.Text`

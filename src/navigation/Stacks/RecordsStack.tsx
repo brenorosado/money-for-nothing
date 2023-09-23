@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { RecordsScreen } from "../../screens/Records";
+import { RecordsScreen } from "../../screens/RecordsScreen";
 import { RecordScreen } from "../../screens/Record";
 
 export type RecordsStackParamList = {

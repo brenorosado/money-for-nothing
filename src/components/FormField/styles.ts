@@ -24,13 +24,16 @@ export const IconContainer = styled.TouchableOpacity`
     border-radius: 8px;
 `;
 
-export const TextField = styled.TextInput`
+export const TextField = styled.TextInput<{ multiline?: boolean }>`
     padding: 10px 16px;
     border-radius: 8px;
-    ${({ theme }) => {
-        const { mainText, mainBorder } = theme.colors;
+    flex: 1;
+    
+    ${({ theme, multiline }) => {
+        const { mainText } = theme.colors;
         return `
             color: ${mainText};
+            ${multiline ? "min-height: 80px;" : ""}
         `;
     }}
 `;

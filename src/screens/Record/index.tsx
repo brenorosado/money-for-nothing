@@ -11,7 +11,8 @@ import { RecordsStackParamList } from "src/navigation/Stacks/RecordsStack";
 import { Loading } from "../../components/Loading";
 import { Button } from "../../components";
 import { ScrollViewProps } from "react-native";
-
+import { getLocales, getCalendars } from 'expo-localization';
+import { localeDate } from "../../utils/fortmatDate";
 
 type FormProps = {
     localId: undefined | number;
@@ -82,16 +83,19 @@ export const RecordScreen = ({ route, navigation }: NativeStackScreenProps<Recor
         loadRecord();
     }, [localId])
 
-    // if(loading || true) return <Loading />;
+    console.log("getLocales", getLocales())
+    console.log("getCalendars", getCalendars())
 
     return (
         <>
-            <S.RecordFormScreen>
+            <S.RecordFormScreen
+                stickyHeaderIndices={[0]}
+            > 
+                <S.RecordHeaderContainer>
+                    <S.RecordTitle>{translateLabel(language, "record", "new record")}</S.RecordTitle>
+                    <Button text="Cancel" onPress={() => navigation.goBack()} />
+                </S.RecordHeaderContainer>
                 <S.RecordFormContainer>
-                    <S.RecordHeaderContainer>
-                        <S.RecordTitle>{translateLabel(language, "record", "new record")}</S.RecordTitle>
-                        <Button text="Cancel" onPress={() => navigation.goBack()} />
-                    </S.RecordHeaderContainer>
                     {watch("type") && <RecordTypeSelector
                         recordType={watch("type")}
                         setRecordType={(newRecordType) => {
@@ -158,6 +162,7 @@ export const RecordScreen = ({ route, navigation }: NativeStackScreenProps<Recor
                         }}
                         setValue={setValue}
                         type="datetime"
+                        mask={(value) => localeDate("pt-BR", "America/Sao_paulo", value)}
                         error={errors?.occurredAt?.message}
                     />
 
@@ -174,6 +179,8 @@ export const RecordScreen = ({ route, navigation }: NativeStackScreenProps<Recor
                             }
                         }}
                         error={errors?.description?.message}
+                        multiline={true}
+                        textAlignVertical="top"
                     />
                     
                 </S.RecordFormContainer>

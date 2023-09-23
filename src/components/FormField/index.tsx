@@ -30,6 +30,7 @@ export const FormField = ({
     error,
     type = "text",
     setValue,
+    mask,
     ...props
 }: FormFieldProps
 ) => {
@@ -47,8 +48,9 @@ export const FormField = ({
                             onTouchCancel={() => setShowDateTimePicker(false)}
                             value={new Date(value)}
                             onChange={(nativeEvent, dateValue) => {
-                                // setValue(name, dateValue);
-                                onChange(dateValue);
+                                console.log("dateValue", dateValue)
+                                console.log("typeof dateValue", typeof dateValue)
+                                onChange(dateValue.toISOString());
                                 setShowDateTimePicker(false);
                             }}
                         /> 
@@ -59,12 +61,9 @@ export const FormField = ({
                             <S.TextField
                                 {...props}
                                 placeholder={placeholder}
-                                onBlur={(oqVem) => {
-                                    console.log("blur")
-                                    onBlur()
-                                }}
+                                onBlur={onBlur}
                                 onChangeText={value => onChange(value)}
-                                value={value}
+                                value={!!mask ? mask(value) : value}
                                 placeholderTextColor="gray"
                                 editable={type !== "datetime"}
                             />
