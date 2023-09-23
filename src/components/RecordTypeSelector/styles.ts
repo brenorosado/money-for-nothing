@@ -4,8 +4,8 @@ import { Animated } from "react-native";
 export const RecordTypeSelectorContainer = styled.View`
     flex-direction: row;
     border-radius: 8px;
-    background: ${({ theme }) => theme.colors.secundary};
-    border: 1px solid ${({ theme }) => theme.colors.aux12};
+    background: ${({ theme }) => theme.colors.defaultButtonsBackground};
+    border: 1px solid ${({ theme }) => theme.colors.screenBackground};
     overflow: hidden;
 `;
 
@@ -21,7 +21,7 @@ export const SelectedRecordTypeIndicator = styled(Animated.View)<{ isExpense: bo
 export const RecordType = styled.TouchableOpacity.attrs({ 
     opacity: 1
 })`
-    padding: 10px 16px;
+    height: 40px;
     width: 50%;
     align-items: center;
     justify-content: center;
@@ -30,7 +30,7 @@ export const RecordType = styled.TouchableOpacity.attrs({
 `;
 
 export const RecordTypeText = styled.Text<{ selected: boolean }>`
-    color: ${({ theme, selected }) => theme.colors[selected ? 'secundary' : 'main']};
+    color: ${({ theme, selected }) => theme.colors.buttonText};
     font-size: 14px;
     font-weight: bold;
 `;

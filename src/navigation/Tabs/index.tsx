@@ -14,18 +14,18 @@ export const Tabs = () => {
   
   const { config } = useConfig();
 
-  const isDark = config.theme === "dark";
+  const colors = config.theme === "dark" ? darkTheme.colors : lightTheme.colors;
 
   return (
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
             ...S.tabBar,
-            backgroundColor: isDark ? darkTheme.colors.secundary : lightTheme.colors.secundary,
+            backgroundColor: colors.tabsBackground,
           },
           headerShown: false,
-          tabBarActiveTintColor: isDark ? darkTheme.colors.main : lightTheme.colors.main,
-          tabBarInactiveTintColor: isDark ? darkTheme.colors.aux13 : lightTheme.colors.aux12,
+          // tabBarActiveTintColor: isDark ? darkTheme.colors.main : lightTheme.colors.main,
+          // tabBarInactiveTintColor: isDark ? darkTheme.colors.aux13 : lightTheme.colors.aux12,
           unmountOnBlur: true,
           tabBarHideOnKeyboard: true,
         }}

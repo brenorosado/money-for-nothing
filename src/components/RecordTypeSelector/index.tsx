@@ -1,6 +1,6 @@
 import * as S from "./styles";
 import { Animated } from "react-native";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect} from "react";
 
 export type RecordTypeSelectorProps = {
     recordType: "EXPENSE" | "INCOMING";
@@ -12,7 +12,15 @@ export const RecordTypeSelector = ({
     setRecordType 
 }: RecordTypeSelectorProps) => {
     const [slideSize, setSlideSize] = useState<number>(100);
-    const slideAnimation = useRef(new Animated.Value(0)).current;
+    const slideAnimation = useRef(new Animated.Value(1)).current;
+
+    const triggerInitialAnimation = () => {
+        Animated.timing(slideAnimation, {
+            toValue: recordType === "EXPENSE" ? 0 : 2,
+            duration: 0,
+            useNativeDriver: true,
+        }).start()
+    }
 
     const onSelectRecord = (value: RecordTypeSelectorProps['recordType']) => {
         setRecordType(value);
@@ -29,6 +37,11 @@ export const RecordTypeSelector = ({
             }).start()
         });
     }
+
+    useEffect(() => {
+        console.log("recordType", recordType)
+        triggerInitialAnimation();
+    }, [])
 
     return (
         <S.RecordTypeSelectorContainer

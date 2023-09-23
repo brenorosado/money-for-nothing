@@ -1,3 +1,4 @@
+import { useState, useEffect, useCallback } from "react";
 import { useConfig } from "../../contexts/Config";
 import { useForm } from "react-hook-form";
 import { Record } from "../../models/Records";
@@ -7,30 +8,46 @@ import { FormField } from "../../components/FormField";
 import * as S from "./styles";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RecordsStackParamList } from "src/navigation/Stacks/RecordsStack";
+import { Loading } from "../../components/Loading";
+import { Button } from "../../components";
+import { ScrollViewProps } from "react-native";
+
 
 type FormProps = {
+    localId: undefined | number;
     type: "INCOMING" | "EXPENSE",
+    title: string;
     category: string;
     value: string;
+    occurredAt: string;
+    description: string;
 }
 
 const DefaultValues: FormProps = {
+    localId: undefined,
     type: "EXPENSE",
+    title: "",
     category: "",
-    value: ""
+    value: "",
+    occurredAt: new Date().toISOString(),
+    description: ""
 }
 
 export const RecordScreen = ({ route, navigation }: NativeStackScreenProps<RecordsStackParamList, 'Record'>) => {
+    const [loading, setLoading] = useState<boolean>(true);
     const { config } = useConfig();
     const { language } = config;
     const { localId } = route.params;
+
+    console.log("localId", localId)
 
     const {
         control,
         handleSubmit,
         watch,
         setValue,
-        formState: { errors }
+        formState: { errors },
+        reset
     } = useForm({
         defaultValues: DefaultValues
     });
@@ -50,49 +67,121 @@ export const RecordScreen = ({ route, navigation }: NativeStackScreenProps<Recor
         }
     }
 
+    const loadRecord = useCallback(async () => {
+        if(typeof localId === "undefined") {
+            setLoading(false);
+            return;
+        }
+
+        const localRecord = await Record.getByLocalId(localId);
+        reset({...localRecord, value: localRecord.value.toString()});
+        setLoading(false);
+    }, [localId])
+
+    useEffect(() => {
+        loadRecord();
+    }, [localId])
+
+    // if(loading || true) return <Loading />;
+
     return (
-        <S.RecordFormContainer>
-            <S.RecordHeaderContainer>
-                <S.RecordTitle>{translateLabel(language, "record", "new record")}</S.RecordTitle>
-            </S.RecordHeaderContainer>
-            <RecordTypeSelector
-                recordType={watch("type")}
-                setRecordType={(newRecordType) => {
-                    setValue("type", newRecordType)
-                }}
-            />
+        <>
+            <S.RecordFormScreen>
+                <S.RecordFormContainer>
+                    <S.RecordHeaderContainer>
+                        <S.RecordTitle>{translateLabel(language, "record", "new record")}</S.RecordTitle>
+                        <Button text="Cancel" onPress={() => navigation.goBack()} />
+                    </S.RecordHeaderContainer>
+                    {watch("type") && <RecordTypeSelector
+                        recordType={watch("type")}
+                        setRecordType={(newRecordType) => {
+                            setValue("type", newRecordType)
+                        }}
+                    />
+        }
+                    <FormField
+                        formTypes={DefaultValues}
+                        control={control} 
+                        placeholder="Gas, pizza, dinner, etc..."
+                        name="title"
+                        label="Title"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: "Required field."
+                            }
+                        }}
+                        error={errors?.title?.message}
+                    />
 
-            <FormField
-                control={control} 
-                placeholder="Aluguel, supermercado, gasolina, etc..."
-                name="category"
-                label="Categoria"
-                rules={{
-                    required: {
-                        value: true,
-                        message: "Campo categoria obrigatório."
-                    }
-                }}
-                error={errors?.category?.message}
-            />
+                    <FormField
+                        formTypes={DefaultValues}
+                        control={control} 
+                        placeholder="Aluguel, supermercado, gasolina, etc..."
+                        name="category"
+                        label="Category"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: "Campo categoria obrigatório."
+                            }
+                        }}
+                        error={errors?.category?.message}
+                    />
 
-            <FormField
-                control={control}
-                placeholder="R$ 0,00"
-                name="value"
-                label="Valor"
-                rules={{
-                    required: {
-                        value: true,
-                        message: "Campo valor obrigatório."
-                    }
-                }}
-                error={errors?.value?.message}
-            />
-            
+                    <FormField
+                        formTypes={DefaultValues}
+                        control={control}
+                        placeholder="R$ 0,00"
+                        name="value"
+                        label="Value"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: "Campo valor obrigatório."
+                            }
+                        }}
+                        error={errors?.value?.message}
+                    />
+
+                    <FormField
+                        formTypes={DefaultValues}
+                        control={control}
+                        placeholder="17/09/2023"
+                        name="occurredAt"
+                        label="Date"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: "Required field."
+                            }
+                        }}
+                        setValue={setValue}
+                        type="datetime"
+                        error={errors?.occurredAt?.message}
+                    />
+
+                    <FormField
+                        formTypes={DefaultValues}
+                        control={control}
+                        placeholder="Insert additional information..."
+                        name="description"
+                        label="Description"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: "Required field."
+                            }
+                        }}
+                        error={errors?.description?.message}
+                    />
+                    
+                </S.RecordFormContainer>
+                <S.Footer />
+            </S.RecordFormScreen>
             <S.AddRecordButton onPress={handleSubmit(onSave)}>
-                <S.AddRecordText>Add record</S.AddRecordText>
+                <S.AddRecordText>Save</S.AddRecordText>
             </S.AddRecordButton>
-        </S.RecordFormContainer>
+        </>
     )
 }

@@ -5,19 +5,28 @@ export const RecordsScreenContainer = styled.FlatList`
   position: relative;
   padding: 0px 16px;
   ${({ theme }) => `
-    background: ${theme.colors.aux4};
+    background: ${theme.colors.screenBackground};
   `}
 `;
 
 export const RecordsHeaderContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
   padding: 16px;
-  align-items: center;
+`;
+
+export const HeaderTextsContainer = styled.View`
+  gap: 4px;
 `;
 
 export const RecordsTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.main};
-  font-weight: 500;
+  color: ${({ theme }) => theme.colors.mainText};
+  font-weight: bold;
   font-size: 20px;
+`;
+
+export const TotalValueText = styled(RecordsTitle)`
+font-size: 24px;
 `;
 
 export const ListSeparator = styled.View`

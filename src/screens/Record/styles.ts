@@ -1,9 +1,17 @@
 import styled from "styled-components/native";
 import { Ionicons } from '@expo/vector-icons';
+import { Dimensions } from "react-native";
+
+const { width } = Dimensions.get("screen");
+
+export const RecordFormScreen = styled.ScrollView`
+    background: ${({ theme }) => theme.colors.screenBackground};
+    flex: 1;
+    position: relative;
+`;
 
 export const RecordFormContainer = styled.View`
     flex: 1;
-    background: ${({ theme }) => theme.colors.aux4};
     padding: 16px;
     width: 100%;
     gap: 16px;
@@ -11,14 +19,14 @@ export const RecordFormContainer = styled.View`
 
 export const RecordHeaderContainer = styled.View`
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 `;
 
 export const RecordTitle = styled.Text`
-    color: ${({ theme }) => theme.colors.main};
-    font-size: 20px;
-    font-weight: 500;
+    color: ${({ theme }) => theme.colors.mainText};
+    font-size: 24px;
+    font-weight: 700;
 `;
 
 export const CloseModalIconContainer = styled.TouchableOpacity`
@@ -29,18 +37,29 @@ export const CloseModalIcon = styled(Ionicons).attrs({
     name: "close-outline",
     size: 24,
 })`
-    color: ${({ theme }) => theme.colors.main};
+    color: ${({ theme }) => theme.colors.mainText};
 `;
 
 export const AddRecordButton = styled.TouchableOpacity`
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
     width: 100%;
     align-items: center;
     justify-content: center;
-    background: ${({ theme }) => theme.colors.aux1};
     padding: 16px;
-    border-radius: 16px;
+    border-radius: 8px;
+    elevation: 2;
+    background: ${({ theme }) => theme.colors.defaultButtonsBackground};
+    width: ${width - 32}px;
 `;
 
 export const AddRecordText = styled.Text`
-    color: ${({ theme }) => theme.colors.main};
+    font-size: 24px;
+    font-weight: bold;
+    color: ${({ theme }) => theme.colors.buttonText};
+`;
+
+export const Footer = styled.View`
+    height: 80px;
 `;
