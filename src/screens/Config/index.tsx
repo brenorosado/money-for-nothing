@@ -2,6 +2,7 @@ import { useConfig, ConfigProps } from "../../contexts/Config";
 import { useState } from "react";
 import * as S from "./styles";
 import { translateLabel } from "../../utils/translateLabel";
+import { ConfigSelect } from "../../components/ConfigSelect";
 
 const languageOptions: {
     label: string;
@@ -15,75 +16,70 @@ const languageOptions: {
         label: "Português - BR",
         value: "portuguese"
     }
-]
+];
 
 const themeOptions: {
+    label: string;
     value: ConfigProps["theme"]
 }[] = [
     {
+        label: "Dark",
         value: "dark"
     },
     {
+        label: "Default",
         value: "default"
     },
     {
+        label: "Light",
         value: "light"
     }
-]
+];
+
+const currencyOptions: {
+    label: string;
+    value: string;
+}[] = [
+    {
+        label: "BRL - Real",
+        value: "BRL"
+    },
+    {
+        label: "USD - Dólar",
+        value: "USD"
+    }
+];
 
 export const ConfigScreen = () => {
-    const [showLanguageOptions, setShowLanguageOptions] = useState<boolean>(false);
-    const [showThemeOptions, setShowThemeOptions] = useState<boolean>(false);
-
-    const { config, selectLanguage, selectTheme } = useConfig();
-    const { language, theme } = config;
-    console.log("config", JSON.stringify(config, null, 2));
+    const { config, selectLanguage, selectTheme, selectCurrency } = useConfig();
+    const { language, theme, currency } = config;
 
     return ( 
         <S.ConfigScreenContainer>
             <S.ConfigScreenHeaderContainer>
                 <S.ConfigScreenTitle>Config</S.ConfigScreenTitle>
             </S.ConfigScreenHeaderContainer>
-            <S.ConfigContainer>
-                <S.ConfigHeader
-                    onPress={() => setShowLanguageOptions(prevState => !prevState)}
-                >
-                    <S.LanguageIcon />
-                    <S.ConfigHeaderText>{translateLabel(language, "config", "language")}: {languageOptions.find(l => l.value === language).label}</S.ConfigHeaderText>
-                </S.ConfigHeader>
-                {showLanguageOptions && 
-                    languageOptions.map(({ value, label }, index) => (
-                        <S.ConfigOption
-                            key={value}
-                            onPress={() => {
-                                selectLanguage(value);
-                            }}
-                            lastElement={index === languageOptions.length - 1}
-                        >
-                            <S.ConfigOptionText>{label}</S.ConfigOptionText>
-                        </S.ConfigOption>
-                ))}
-            </S.ConfigContainer>
-            <S.ConfigContainer>
-                <S.ConfigHeader
-                    onPress={() => setShowThemeOptions(prevState => !prevState)}
-                >
-                    <S.ThemeIcon />
-                    <S.ConfigHeaderText>{translateLabel(language, "config", "theme")}: {translateLabel(language, "config", theme)}</S.ConfigHeaderText>
-                </S.ConfigHeader>
-                {showThemeOptions && 
-                    themeOptions.map(({ value }, index) => (
-                        <S.ConfigOption
-                            key={value}
-                            onPress={() => {
-                                selectTheme(value);
-                            }}
-                            lastElement={index === themeOptions.length - 1}
-                        >
-                            <S.ConfigOptionText>{translateLabel(language, "config", value)}</S.ConfigOptionText>
-                        </S.ConfigOption>
-                ))}
-            </S.ConfigContainer>
+            <ConfigSelect
+                configName="Language"
+                options={languageOptions}
+                selectedOption={language}
+                setSelectedOption={selectLanguage}
+                icon={<S.LanguageIcon />}
+            />
+            <ConfigSelect
+                configName="Currency"
+                options={currencyOptions}
+                selectedOption={currency}
+                setSelectedOption={selectCurrency}
+                icon={<S.CurrencyIcon />}
+            />
+            <ConfigSelect
+                configName="Theme"
+                options={themeOptions}
+                selectedOption={theme}
+                setSelectedOption={selectTheme}
+                icon={<S.ThemeIcon />}
+            />
         </S.ConfigScreenContainer>
     )
 }
