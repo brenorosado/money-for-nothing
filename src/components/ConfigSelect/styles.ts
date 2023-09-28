@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 
 export const ConfigSelectContainer = styled.View`
     border-radius: 16px;
-    border: 1px solid ${({ theme }) => theme.colors.mainText};
+    border: 1px solid ${({ theme }) => theme.colors.mainBorder};
 `;
 
 export const ConfigSelectHeader = styled.TouchableOpacity`
@@ -15,7 +15,7 @@ export const ConfigSelectHeader = styled.TouchableOpacity`
 
 export const ConfigSelectHeaderText = styled.Text`
     color: ${({ theme }) => theme.colors.mainText};
-    font-size: 20px;
+    font-size: 16px;
 `;
 
 export const ConfigOption = styled.TouchableOpacity<{ lastElement: boolean }>`

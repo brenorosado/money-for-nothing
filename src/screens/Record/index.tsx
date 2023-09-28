@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useConfig } from "../../contexts/Config";
 import { useForm } from "react-hook-form";
 import { Record } from "../../models/Records";
-import { translateLabel } from "../../utils/translateLabel";
+// import { translateLabel } from "../../utils/translate";
 import { RecordTypeSelector } from "../../components/RecordTypeSelector";
 import { FormField } from "../../components/FormField";
 import * as S from "./styles";
@@ -39,8 +39,6 @@ export const RecordScreen = ({ route, navigation }: NativeStackScreenProps<Recor
     const { config } = useConfig();
     const { language } = config;
     const { localId } = route.params;
-
-    console.log("localId", localId)
 
     const {
         control,
@@ -92,7 +90,7 @@ export const RecordScreen = ({ route, navigation }: NativeStackScreenProps<Recor
                 stickyHeaderIndices={[0]}
             > 
                 <S.RecordHeaderContainer>
-                    <S.RecordTitle>{translateLabel(language, "record", "new record")}</S.RecordTitle>
+                    <S.RecordTitle>New Record</S.RecordTitle>
                     <Button text="Cancel" onPress={() => navigation.goBack()} />
                 </S.RecordHeaderContainer>
                 <S.RecordFormContainer>

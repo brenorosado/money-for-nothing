@@ -34,6 +34,12 @@
     "owner": "brenorosadodev",
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/bb7a3caf-4e8e-464c-add6-32873011b199"
+    }
   }
 }

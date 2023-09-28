@@ -10,13 +10,16 @@ export const ConfigScreenContainer = styled.View`
 
 export const ConfigScreenHeaderContainer = styled.View`
   padding: 16px;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+  background: ${({ theme }) => theme.colors.screenBackground};
 `;
 
 export const ConfigScreenTitle = styled.Text`
   color: ${({ theme }) => theme.colors.mainText};
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 700;
+  font-size: 24px;
 `;
 
 export const ThemeIcon = styled(Ionicons).attrs({

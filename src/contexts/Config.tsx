@@ -6,7 +6,7 @@ type ConfigContextProviderProps = {
 };
 
 export type ConfigProps = {
-    language: "english" | "portuguese";
+    language: "en" | "pt-BR";
     theme: "default" | "light" | "dark";
     currency: "BRL" | "USD"
 }
@@ -15,11 +15,10 @@ type ConfigContextData = {
     config: ConfigProps;
     selectLanguage: (newLanguage: ConfigProps["language"]) => Promise<void>;
     selectTheme: (newTheme: ConfigProps["theme"]) => Promise<void>;
-    selectCurrency: (newCurrency: ConfigProps["currency"]) => Promise<void>;
 }
 
 const defaultValues: ConfigProps = {
-    language: "english",
+    language: "en",
     theme: "default",
     currency: "BRL"
 }
@@ -70,8 +69,7 @@ export const ConfigContextProvider = ({
             value={{
                 config,
                 selectLanguage,
-                selectTheme,
-                selectCurrency
+                selectTheme
             }}
         >
             {children}

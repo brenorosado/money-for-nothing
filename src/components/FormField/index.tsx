@@ -45,11 +45,11 @@ export const FormField = ({
                 <>
                     {type === "datetime" && showDateTimePicker && 
                         <DateTimePicker
+                            accentColor="#b82116"
+                            textColor="#b82116"
                             onTouchCancel={() => setShowDateTimePicker(false)}
                             value={new Date(value)}
                             onChange={(nativeEvent, dateValue) => {
-                                console.log("dateValue", dateValue)
-                                console.log("typeof dateValue", typeof dateValue)
                                 onChange(dateValue.toISOString());
                                 setShowDateTimePicker(false);
                             }}
