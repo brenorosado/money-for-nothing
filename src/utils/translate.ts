@@ -1,13 +1,13 @@
 
 import PortugueseLabels from "../locale/pt-BR.json";
-import EnglishLabels from "../locale/en.json";
+import EnglishLabels from "../locale/en-US.json";
 
-type LanguageOptions = "pt-BR" | "en";
+type LanguageOptions = "pt-BR" | "en-US";
 
 const languageLabelsDecider = (language) => {
     const labels = {
         "pt-BR": PortugueseLabels,
-        "en": EnglishLabels
+        "en-US": EnglishLabels
     }
 
     return labels[language]

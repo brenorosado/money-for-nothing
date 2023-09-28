@@ -1,12 +1,14 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getLocales, getCalendars } from 'expo-localization';
+import { Appearance, useColorScheme } from "react-native";
 
 type ConfigContextProviderProps = {
     children: ReactNode;
 };
 
 export type ConfigProps = {
-    language: "en" | "pt-BR";
+    language: "en-US" | "pt-BR";
     theme: "default" | "light" | "dark";
     currency: "BRL" | "USD"
 }
@@ -18,9 +20,9 @@ type ConfigContextData = {
 }
 
 const defaultValues: ConfigProps = {
-    language: "en",
+    language: "en-US",
     theme: "default",
-    currency: "BRL"
+    currency: "USD"
 }
 
 const ConfigContext = createContext({} as ConfigContextData);
@@ -30,19 +32,26 @@ export const ConfigContextProvider = ({
 }: ConfigContextProviderProps) => {
     const [config, setConfig] = useState<ConfigProps>(defaultValues)
 
+    
     const selectLanguage = async (newLanguage: ConfigProps["language"]) => {
         setConfig(prevState => ({ ...prevState, language: newLanguage }));
         await AsyncStorage.setItem("@money-for-nothing:language", newLanguage);
     }
-
+    
     const selectTheme = async (newTheme: ConfigProps["theme"]) => {
         setConfig(prevState => ({ ...prevState, theme: newTheme }));
         await AsyncStorage.setItem("@money-for-nothing:theme", newTheme)
     }
 
-    const selectCurrency = async (newCurrency: ConfigProps["currency"]) => {
-        setConfig(prevState => ({ ...prevState, currency: newCurrency }));
-        await AsyncStorage.setItem("@money-for-nothing:currency", newCurrency)
+    const getInitialConfig = () => {
+        const { currencyCode, languageTag } = getLocales()[0];
+        const deviceTheme = Appearance.getColorScheme();
+        setConfig({
+            theme: deviceTheme,
+            language: languageTag as ConfigProps['language'],
+            currency: currencyCode as ConfigProps['currency']
+        });
+
     }
 
     const loadPreviousConfig = async () => {
@@ -53,6 +62,13 @@ export const ConfigContextProvider = ({
         const previousCurrency =
             await AsyncStorage.getItem("@money-for-nothing:currency") as ConfigProps["currency"];
     
+        if (
+            !previousLanguage ||
+            !previousTheme ||
+            !previousCurrency
+        )
+            return getInitialConfig()
+
         setConfig({
             language: previousLanguage || defaultValues.language,
             theme: previousTheme || defaultValues.theme,

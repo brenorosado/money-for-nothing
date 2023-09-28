@@ -9,7 +9,7 @@ const languageOptions: {
 }[] = [
     {
         label: "English",
-        value: "en"
+        value: "en-US"
     },
     {
         label: "Português - BR",
@@ -20,6 +20,8 @@ const languageOptions: {
 export const ConfigScreen = () => {
     const { config, selectLanguage, selectTheme } = useConfig();
     const { language, theme } = config;
+
+    console.log("language, theme", language, theme)
 
     const themeOptions: {
         label: string;

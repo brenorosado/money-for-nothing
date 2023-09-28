@@ -53,6 +53,7 @@ export const AddRecordButton = styled.TouchableOpacity`
     border-radius: 8px;
     elevation: 2;
     background: ${({ theme }) => theme.colors.defaultButtonsBackground};
+    opacity: 0.7;
     width: ${width - 32}px;
 `;
 

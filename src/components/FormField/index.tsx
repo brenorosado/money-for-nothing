@@ -45,8 +45,6 @@ export const FormField = ({
                 <>
                     {type === "datetime" && showDateTimePicker && 
                         <DateTimePicker
-                            accentColor="#b82116"
-                            textColor="#b82116"
                             onTouchCancel={() => setShowDateTimePicker(false)}
                             value={new Date(value)}
                             onChange={(nativeEvent, dateValue) => {
